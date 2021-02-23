@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block javascript %}
+	<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block title %}Paiement de commande
+{% endblock %}
+
+{% block body %}
+	<h2>Paiement de la commande</h2>
+	<p>Vérifiez les informations avant paiement.</p>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+			<strong>Mon adresse</strong><br>
+			<div class="form-check">
+				{‌{delivery|raw}}
+			</div>
+
+			<hr>
+			<strong>Mon Transporteur</strong><br>
+			<div class="form-check">
+				{‌{carrier.name}}<br>
+				{‌{carrier.description}}<br>
+				{‌{ carrier.price|number_format(2, ',', '.')}} €<br>
+				{‌{carrier.name}}<br>
+			</div>
+
+		</div>
+		<div class="col-md-6">
+			<div class="text-center">
+				<b>Ma commande</b><br>
+			</div>
+			<div class="order-summary">
+				{% set total = null %}
+				{% for key,product in cart %}
+					<div class="row {% if key > 0 %} mt-2 {% endif %}">
+						<div class="col-2"><img src="/uploads/{‌{product.product.illustration}}" alt="{‌{ product.product.name }}" height="65px"></div>
+						<div class="col-8 my-auto">
+							{‌{ product.product.name }}<br>
+							<small>
+								{‌{product.product.subTitle}}<br>
+								x {‌{ product.quantity }}
+							</small>
+						</div>
+						<div class="col-2 my-auto">{‌{(product.quantity * (product.product.price / 100))|number_format(2, ',', '.')}}</div>
+					</div>
+					{% set total = total + product.quantity * product.product.price %}
+				{% endfor %}
+			</div>
+			<hr>
+			<strong>Sous-total : {‌{(total / 100)|number_format(2, ',', '.')}} €
+			</strong><br>
+			<strong>Transport : {‌{ carrier.price|number_format(2, ',', '.')}} €
+			</strong><br>
+			<strong>Total : {‌{ ((total / 100) + carrier.price)|number_format(2, ',', '.')}} €</strong>
+			<a class="btn btn-success btn-block mt-3" id="checkout-button">Payer | {‌{ ((total / 100) + carrier.price)|number_format(2, ',', '.')}} €</a>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+		var stripe = Stripe("pk_test_51I4pHVFM8ZWCuzVvskt3N7XmSyCRbsyBzTJaI57w13L7TVaxhXjuNGuRz6oUXJEDmnO5uzrKJyvWYxWsVDNRgtez00pdKePwvM");
+var checkoutButton = document.getElementById("checkout-button");
+checkoutButton.addEventListener("click", function () {
+fetch("/commande/create-session/{‌{ reference }}", {
+method: "POST",
+"GET"
+}).then(function (response) {
+return response.json();
+}).then(function (session) {
+if (session.error == 'order') { // redirection vers page de commande
+window.location.replace('{‌{ path(' order ') }}');
+} else {
+return stripe.redirectToCheckout({sessionId: session.id});
+}
+}).then(function (result) {
+// If redirectToCheckout fails due to a browser or network
+// error, you should display the localized error message to your
+// customer using error.message.
+if (result.error) {
+alert(result.error.message);
+}
+}).catch(function (error) {
+console.error("Error:", error);
+});
+});
+	</script>
+{% endblock %}

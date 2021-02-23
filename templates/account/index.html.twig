@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte-La Boutique française
+{% endblock %}
+
+{% block content %}
+	<h1>Mon compte</h1>
+	Bienvenue
+	{{ app.user.firstname }}
+	dans votre espace personnel. Ici vous allez gérer toutes vos informations
+	<a href="{{ path('account_password')}}">Modifier mon mot de passe</a><br/>
+	<a href="{{ path('address_all')}}">Gérer mes adresses</a><br/>
+{% endblock %}
