@@ -52,14 +52,11 @@ class Order
     private $orderDetails;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isPaid;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $reference;
+
+ 
 
     public function __construct()
     {
@@ -69,15 +66,13 @@ class Order
     public function getTotal()
     {
         $total = null;
-        foreach($this->getOrderDetails()->getValues() as $product) {
-            // Dans le cas d'une collection , si on veut récupérer des valuer il faut faire une boucle et récupérer les propriété
-           // $total  = $total + ($product->getPrice() * $product->getQuantity());
-            $total  += ($product->getPrice() * $product->getQuantity());
 
+        foreach ($this->getOrderDetails()->getValues() as $product) {
+            $total = $total + ($product->getPrice() * $product->getQuantity());
         }
+
         return $total;
-      
-    }  
+    }
 
     public function getId(): ?int
     {
@@ -152,7 +147,7 @@ class Order
         return $this->orderDetails;
     }
 
-    public function addOrdeDetail(OrderDetails $orderDetail): self
+    public function addOrderDetail(OrderDetails $orderDetail): self
     {
         if (!$this->orderDetails->contains($orderDetail)) {
             $this->orderDetails[] = $orderDetail;
@@ -162,9 +157,10 @@ class Order
         return $this;
     }
 
-    public function removeOrdeDetail(OrderDetails $orderDetail): self
+    public function removeOrderDetail(OrderDetails $orderDetail): self
     {
-        if ($this->orderDetails->removeElement($orderDetail)) {
+        if ($this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails->removeElement($orderDetail);
             // set the owning side to null (unless already changed)
             if ($orderDetail->getMyOrder() === $this) {
                 $orderDetail->setMyOrder(null);
@@ -174,6 +170,16 @@ class Order
         return $this;
     }
 
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
     public function getIsPaid(): ?bool
     {
         return $this->isPaid;
@@ -182,18 +188,6 @@ class Order
     public function setIsPaid(bool $isPaid): self
     {
         $this->isPaid = $isPaid;
-
-        return $this;
-    }
-
-    public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    public function setReference(string $reference): self
-    {
-        $this->reference = $reference;
 
         return $this;
     }

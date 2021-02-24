@@ -20,7 +20,7 @@ class OrderDetailsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return OrdeDetails[] Returns an array of OrdeDetails objects
+    //  * @return OrderDetails[] Returns an array of OrderDetails objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class OrderDetailsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?OrdeDetails
+    public function findOneBySomeField($value): ?OrderDetails
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.exampleField = :val')
