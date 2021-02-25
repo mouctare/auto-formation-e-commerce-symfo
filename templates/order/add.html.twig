@@ -66,21 +66,20 @@
 			{{ (carrier.price / 100)|number_format(2, ',', '.') }}
 			€
 			<hr>
-			<strong>Total :
-			</strong>
+			<strong>Total :</strong>
 			{{ ((total / 100) + (carrier.price / 100))|number_format(2, ',', '.') }}
 			€
 
 			<a class="btn btn-success btn-block mt-3" id="checkout-button" data-ref={{ reference }}>Payer |
 				{{ ((total / 100) + (carrier.price / 100))|number_format(2, ',', '.') }}
-				€</a>
+				€
+			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}
 
-{% block script %}
-	<script type="text/javascript">
-		var stripe = Stripe("pk_test_51IFzX1LidspSVr1R7yLxyfgP6UxVtPqFHeQR5FUyOp0vXRLxAcmVJReSmbPhZRlZiYrqBOHvQbJBVvQDu8Euk7mw00xUpxtolZ");
+	{% block script %}
+		<script type="text/javascript">
+			var stripe = Stripe("pk_test_51IFzX1LidspSVr1R7yLxyfgP6UxVtPqFHeQR5FUyOp0vXRLxAcmVJReSmbPhZRlZiYrqBOHvQbJBVvQDu8Euk7mw00xUpxtolZ");
 let checkoutButton = document.getElementById("checkout-button");
 let reference = checkoutButton.getAttribute("data-ref")
 checkoutButton.addEventListener("click", function () {
@@ -103,5 +102,5 @@ alert(result.error.message);
 console.error("Error:", error);
 });
 });
-	</script>
-{% endblock %}
+		</script>
+	{% endblock %}

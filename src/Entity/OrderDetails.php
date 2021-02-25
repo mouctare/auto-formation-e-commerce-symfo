@@ -45,7 +45,8 @@ class OrderDetails
 
     public function __toString()
     {
-        return $this->getProduct().' x'.$this->getQuantity();
+        // Pour un peut serialize la commande achété
+        return $this->getProduct(). ' x'.$this->getQuantity();
     }
 
     public function getId(): ?int

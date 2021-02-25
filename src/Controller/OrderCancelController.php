@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Order;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class OrderValidateController extends AbstractController
+class OrderCancelController extends AbstractController
 {
     private $orderRepository ;
     private $entityManger ;
@@ -19,33 +18,21 @@ class OrderValidateController extends AbstractController
         $this->orderRepository  = $orderRepository ;
         $this->entityManger  = $entityManager ;
     }
+    
     /**
-     * @Route("/commande/merci/{stripeSessionId}", name="order_validate")
+     * @Route("/commande/erreur/{stripeSessionId}", name="order_cancel")
      */
-    public function index($stripeSessionId): Response
+    public function index($stripeSessionId)
     {
         $order = $this->orderRepository->findOneByStripeSessionId($stripeSessionId);
         
         if(!$order || $order->getUser() != $this->getUser()){
             return $this->redirectToRoute('home');
         }
-       
-        if(!$order->getIsPaid()) {
-               // Modifier  le staut isPaid de notre commande
-               $order->setIsPaid(1);
-               $this->entityManger->flush();
-            // Envoyer un email à notre client pour lui informer
 
-        }
-     
-        // Afficher les quelques infos de la commmande
-
-
-
-
-        return $this->render('order_validate/index.html.twig', [
-            'order' => $order
-          
+        // Envoyer un email à l'utilisateur pour lui indiquer ll'échec du payement
+        return $this->render('order_cancel/index.html.twig', [
+           'order' => $order
         ]);
     }
 }

@@ -2,18 +2,32 @@
 
 namespace App\Controller;
 
+use Stripe\Stripe;
 use App\Classes\Cart;
 use App\Entity\Order;
 use App\Entity\Product;
-use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Checkout\Session;
-use Stripe\Stripe;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\OrderRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class StripeController extends AbstractController
 {
+    /**
+       *
+       * @var OrderRepository $orderRepository
+       */
+      private $orderRepository;
+
+
+
+    public function __construct(OrderRepository $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
+    
     /**
      * @Route("/commande/create-session/{reference}", name="stripe_create_session")
      */
@@ -22,7 +36,7 @@ class StripeController extends AbstractController
         $products_for_stripe = [];
         $YOUR_DOMAIN = 'https://127.0.0.1:8000';
 
-        $order = $entityManager->getRepository(Order::class)->findOneByReference($reference);
+        $order = $this->orderRepository->findOneByReference($reference);
 
         if (!$order) {
             new JsonResponse(['error' => 'order']);
@@ -47,7 +61,7 @@ class StripeController extends AbstractController
         $products_for_stripe[] = [
             'price_data' => [
                 'currency' => 'eur',
-                'unit_amount' => $order->getCarrierPrice() * 100,
+                'unit_amount' => $order->getCarrierPrice(),
                 'product_data' => [
                     'name' => $order->getCarrierName(),
                     'images' => [$YOUR_DOMAIN],
