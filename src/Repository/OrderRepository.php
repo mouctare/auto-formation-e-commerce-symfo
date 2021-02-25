@@ -37,7 +37,7 @@ class OrderRepository extends ServiceEntityRepository
     // /**
     //  * @return Order[] Returns an array of Order objects
     //  */
-    /*
+
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('o')
@@ -49,7 +49,7 @@ class OrderRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Order

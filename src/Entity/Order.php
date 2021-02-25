@@ -56,6 +56,16 @@ class Order
      */
     private $reference;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $stripeSessionId;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPaid;
+
  
 
     public function __construct()
@@ -188,6 +198,18 @@ class Order
     public function setIsPaid(bool $isPaid): self
     {
         $this->isPaid = $isPaid;
+
+        return $this;
+    }
+
+    public function getStripeSessionId(): ?string
+    {
+        return $this->stripeSessionId;
+    }
+
+    public function setStripeSessionId(?string $stripeSessionId): self
+    {
+        $this->stripeSessionId = $stripeSessionId;
 
         return $this;
     }

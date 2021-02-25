@@ -4,6 +4,7 @@
 	<script src="https://js.stripe.com/v3/"></script>
 {% endblock %}
 
+
 {% block title %}Paiement de ma commande - La Boutique Française
 {% endblock %}
 
@@ -79,8 +80,8 @@
 
 {% block script %}
 	<script type="text/javascript">
-		var stripe = Stripe("pk_test_51I4pHVFM8ZWCuzVvskt3N7XmSyCRbsyBzTJaI57w13L7TVaxhXjuNGuRz6oUXJEDmnO5uzrKJyvWYxWsVDNRgtez00pdKePwvM");
-var checkoutButton = document.getElementById("checkout-button");
+		var stripe = Stripe("pk_test_51IFzX1LidspSVr1R7yLxyfgP6UxVtPqFHeQR5FUyOp0vXRLxAcmVJReSmbPhZRlZiYrqBOHvQbJBVvQDu8Euk7mw00xUpxtolZ");
+let checkoutButton = document.getElementById("checkout-button");
 let reference = checkoutButton.getAttribute("data-ref")
 checkoutButton.addEventListener("click", function () {
 fetch("/commande/create-session/" + reference, {method: "POST"}).then(function (response) {
