@@ -26,7 +26,9 @@ class OrderRepository extends ServiceEntityRepository
     public function findSuccessOrders($user)
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.state > 0')
+            ->andWhere('o.isPaid = 1')
+            // Tu me fais une seclection uniquement les commandes qui concerne  mon  user  c'est à en utilisant ma colonne user dans ma table order
+            // Je vais uniquement les entrées qui concerne mon user courant(connecté)
             ->andWhere('o.user = :user')
             ->setParameter('user', $user)
             ->orderBy('o.id', 'DESC')
