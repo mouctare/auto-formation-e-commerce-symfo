@@ -28,7 +28,7 @@ class OrderController extends AbstractController
     {
         if (!$this->getUser()->getAddresses()->getValues())
         {
-            return $this->redirectToRoute('account_address_add');
+            return $this->redirectToRoute('ajout_address');
         }
 
         $form = $this->createForm(OrderType::class, null, [

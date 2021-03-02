@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classes\Cart;
+use App\Classes\Mail;
 use App\Entity\Order;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,6 +39,10 @@ class OrderSuccessController extends AbstractController
                $order->setIsPaid(1);
                $this->entityManger->flush();
             // Envoyer un email à notre client pour lui informer
+            $mail = new Mail();
+            $content = "Bonjour ".$order->getUser()->getFirstname()."<br/>Merci pour votre commande.<br><br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam expedita fugiat ipsa magnam mollitia optio voluptas! Alias, aliquid dicta ducimus exercitationem facilis, incidunt magni, minus natus nihil odio quos sunt?";
+            $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'Votre commande est bien validée', $content);
+
 
         }
      
