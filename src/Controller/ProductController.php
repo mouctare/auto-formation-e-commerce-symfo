@@ -48,11 +48,13 @@ class ProductController extends AbstractController
 
     /**
      *
-     * @Route("/produit/{id}", name="product")
+      
+     * @Route("/produit/{id}", name="product", requirements={"id" = "(\d+)"})
      */
     public function show($id)
     {
         $product = $this->entityManager->getRepository(Product::class)->find($id);
+        $products = $this->productRepository->findByIsBest(1);
 
         if(!$product) {
             return $this->redirectToRoute('products');
@@ -60,6 +62,7 @@ class ProductController extends AbstractController
         
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'products' => $products,
         ]);
     }
 }
