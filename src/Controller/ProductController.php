@@ -43,17 +43,20 @@ class ProductController extends AbstractController
         return $this->render('product/index.html.twig', [
             'products' => $products,
             'form' => $form->createView()
+            
+            
         ]);
     }
 
+     
     /**
-     *
-      
-     * @Route("/produit/{id}", name="product", requirements={"id" = "(\d+)"})
+     * @Route("/produit/{slug}", name="product")
      */
-    public function show($id)
+
+      public function show($slug)
     {
-        $product = $this->entityManager->getRepository(Product::class)->find($id);
+        //("/produit/{id<\d+>}", name="product")
+        $product = $this->productRepository->findOneBySlug($slug);
         $products = $this->productRepository->findByIsBest(1);
 
         if(!$product) {
