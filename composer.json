@@ -84,13 +84,13 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
-        "database-setup": [
+        "database-run": [
             "php bin/console doctrine:migrations:migrate --no-interaction"
            
         ],
         "post-install-cmd": [
             "@auto-scripts",
-            "@database-setup"
+            "@database-run"
         ],
         "post-update-cmd": [
             "@auto-scripts"
