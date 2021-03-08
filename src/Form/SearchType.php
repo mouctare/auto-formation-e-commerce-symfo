@@ -1,5 +1,5 @@
 <?php
-namespace App\Classes;
+namespace App\Form;
 
 
 use App\Classes\Search;

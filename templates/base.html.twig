@@ -12,8 +12,11 @@
 		</title>
 
 		<!-- Bootstrap core CSS -->
-		<link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
-		<link rel="stylesheet" href="{{'assets/css/boutiquefrançaise.css'}}">
+		{# <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
+						<link rel="stylesheet" href="{{'assets/css/boutiquefrançaise.css'}}"> #}
+		<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+		<link rel="stylesheet" href="{{ asset('assets/css/boutiquefrancaise.css') }}">
+
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> {% block javascript %}{% endblock %}
 
 		<style>
@@ -51,7 +54,7 @@
 							<a class="nav-link" href="#">Qui sommes-nous ?</a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link" href="#">Contact</a>
+							<a class="nav-link" href="{{ path('contact')}}">Contact</a>
 						</li>
 
 					</ul>
@@ -114,7 +117,7 @@
 
 
 			<!-- Marketing messaging and featurettes
-																																																																																																																																																																																																																																													                ================================================== -->
+																																																																																																																																																																																																																																																						                ================================================== -->
 			<!-- Wrap the rest of the page in another container to center all the content. -->
 
 			<div class="container marketing {% if block('carousel') is not  defined%}mt-5 {% endif %}"> {% block content %}{% endblock %}
