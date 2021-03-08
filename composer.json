@@ -7,16 +7,16 @@
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "bluemmb/faker-picsum-photos-provider": "^1.0",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.2",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
-        "easycorp/easyadmin-bundle": "^3.2",
-        "mailjet/mailjet-apiv3-php": "^1.5",
+        "liorchamla/faker-prices": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
-        "stripe/stripe-php": "^7.74",
+        "stripe/stripe-php": "^7.69",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.2.*",
         "symfony/console": "5.2.*",
@@ -42,12 +42,13 @@
         "symfony/twig-bundle": "^5.2",
         "symfony/validator": "5.2.*",
         "symfony/web-link": "5.2.*",
-        "symfony/webpack-encore-bundle": "^1.9",
         "symfony/yaml": "5.2.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+     
+        "fzaninotto/faker": "^1.9",
         "symfony/browser-kit": "^5.2",
         "symfony/css-selector": "^5.2",
         "symfony/debug-bundle": "^5.2",
@@ -85,7 +86,8 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "database-setup": [
-            "php bin/console doctrine:migrations:migrate --no-interaction"
+          "php bin/console doctrine:migrations:migrate --no-interaction"
+         
         ],
         "post-install-cmd": [
             "@auto-scripts",
