@@ -31,7 +31,7 @@ class StripeController extends AbstractController
     /**
      * @Route("/commande/create-session/{reference}", name="stripe_create_session")
      */
-    public function index(EntityManagerInterface $entityManager, Cart $cart, $reference)
+    public function index(EntityManagerInterface $entityManager,  $reference)
     {
         $products_for_stripe = [];
         $YOUR_DOMAIN = 'https://127.0.0.1:8000';

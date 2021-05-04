@@ -24,8 +24,9 @@ class OrderController extends AbstractController
     /**
      * @Route("/commande", name="order")
      */
-    public function index(Cart $cart, Request $request)
+    public function index(Cart $cart)
     {
+        // Es ce que toi utilisateur tu as déjà une adresse sinon je te redirige
         if (!$this->getUser()->getAddresses()->getValues())
         {
             return $this->redirectToRoute('ajout_address');
